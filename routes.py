@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+from main.translator import translated
 
 app = Flask(__name__)
 
@@ -10,11 +11,9 @@ def index():
 @app.route('/translate',methods = ['POST','GET'])
 def translate():
     text = ""
-    translation = ""
     if request.method == 'POST':
         text = request.form['from-text']
-        translation = text[::-1]
-        return render_template('translate.html', text=text, translation = translation)
+        return render_template('translate.html', text=text, translation = translated(text))
     return render_template('translate.html')
 
 if __name__ == '__main__':
